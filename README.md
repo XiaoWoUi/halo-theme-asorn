@@ -1,8 +1,13 @@
-# Asorn「Halo版」
-Asorn 个人作品集 Halo 版，一个偏暗色的单页作品集，完整还原 Asorn 原版站点的视觉与动效，并针对 Halo 做了配置化适配。
+# ✨ Asorn「Halo版」
+<div align="center">  
 
-设计：Asorn  ·  开发：HaoUp
+一款 🎨 [Halo2.0](https://github.com/halo-dev/halo) 的博客主题  
+移植于 🌟 [Asorn](https://github.com/asorn/asorn-open)主题
+Asorn Pro开发中 🚧 [Asorn](https://asorn.cn/index.html)
 
-原版静态站仓库：https://github.com/asorn/asorn-open
+</div>
 
-后续还会发布 Asorn Pro 主题，敬请期待。
+### 👀 预览：[Demo](https://asorn.528688.cn/)
+
+### 📦 安裝
+直接通过后台应用市场安装或者下载[releases](https://github.com/XiaoWoUi/halo-theme-asorn/issues)，通过 Halo Console 后台主题安装处上传即可。
