@@ -1,0 +1,29 @@
+<th:block
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="hero"
+  th:with="heroConfig=${theme.config.home != null ? theme.config.home.hero : null},
+           titlePrefix=${heroConfig != null and heroConfig.title_prefix != null and !#strings.isEmpty(heroConfig.title_prefix) ? heroConfig.title_prefix : 'Hi, I''m'},
+           titleName=${heroConfig != null and heroConfig.title_name != null and !#strings.isEmpty(heroConfig.title_name) ? heroConfig.title_name : 'Asorn'},
+           titleLink=${heroConfig != null and heroConfig.title_link != null and !#strings.isEmpty(heroConfig.title_link) ? heroConfig.title_link : 'https://asorn.cn'},
+           titleTarget=${heroConfig != null and heroConfig.title_target != null and !#strings.isEmpty(heroConfig.title_target) ? heroConfig.title_target : '_self'},
+           typed1=${heroConfig != null and heroConfig.typed_line1 != null and !#strings.isEmpty(heroConfig.typed_line1) ? heroConfig.typed_line1 : '>_ welcome to my secret garden ^1000'},
+           typed2=${heroConfig != null and heroConfig.typed_line2 != null and !#strings.isEmpty(heroConfig.typed_line2) ? heroConfig.typed_line2 : '>_ and let''s explore it now ^1000'}"
+>
+  <div
+    class="hello"
+    id="home-hero"
+    th:attr="data-typed-line1=${typed1}, data-typed-line2=${typed2}"
+  >
+    <div class="title">
+      <div class="title-hi" th:text="${titlePrefix}"></div>
+      <a
+        class="title-name"
+        href="https://asorn.cn"
+        th:href="${titleLink}"
+        th:target="${titleTarget}"
+        th:text="${titleName}"
+      ></a>
+    </div>
+    <div class="hello-desc" id="typed"></div>
+  </div>
+</th:block>

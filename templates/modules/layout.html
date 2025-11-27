@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, content, head)">
+  <head>
+    <th:block th:replace="~{modules/head :: head(title = ${title})}"></th:block>
+    <th:block th:if="${head != null}">
+      <th:block th:replace="${head}" />
+    </th:block>
+  </head>
+  <body>
+    <canvas
+      class="fireworks"
+      th:if="${theme.config.custom != null and theme.config.custom.enable_click_effect}"
+    ></canvas>
+    <th:block th:replace="~{modules/header :: header}"></th:block>
+    <th:block th:replace="${content}"></th:block>
+    <th:block th:replace="~{modules/footer :: footer}"></th:block>
+    <div class="widget">
+      <div class="shape-light"></div>
+      <div class="shape-star">
+        <div class="rising-stars rising-stars-visible">
+          <div style="height:1px;width:1px"></div>
+          <div style="height:2px;width:2px"></div>
+          <div style="height:1px;width:1px"></div>
+        </div>
+      </div>
+      <div class="shape-earth"></div>
+    </div>
+    <th:block th:replace="~{modules/foot :: foot}"></th:block>
+    <script
+      type="text/javascript"
+      th:if="${theme.config.custom != null and !#strings.isEmpty(theme.config.custom.code_js)}"
+      th:utext="${theme.config.custom.code_js}"
+    ></script>
+    <th:block
+      th:if="${theme.config.custom != null and !#strings.isEmpty(theme.config.custom.ds_footer)}"
+      th:utext="${theme.config.custom.ds_footer}"
+    ></th:block>
+  </body>
+</html>

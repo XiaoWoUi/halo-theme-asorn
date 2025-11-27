@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(
+        title = ${site.title + (site.subtitle != null and !#strings.isEmpty(site.subtitle) ? ' - ' + site.subtitle : '')},
+        content = ~{::content},
+        head = ~{::head}
+      )}">
+  <th:block th:fragment="head">
+    <meta
+      name="description"
+      th:if="${site.seo != null and !#strings.isEmpty(site.seo.description)}"
+      th:content="${site.seo.description}"
+    />
+  </th:block>
+  <th:block th:fragment="content">
+    <div class="index">
+      <th:block th:replace="~{modules/home/hero :: hero}"></th:block>
+      <th:block th:replace="~{modules/home/project :: project}"></th:block>
+    </div>
+    <script>
+      window.addEventListener('load', function () {
+        if (!window.Typed) {
+          return;
+        }
+        var hero = document.getElementById('home-hero');
+        var typedElement = document.querySelector('#typed');
+        if (!hero || !typedElement) {
+          return;
+        }
+        var line1 = hero.dataset.typedLine1 || ">_ welcome to my secret garden ^1000";
+        var line2 = hero.dataset.typedLine2 || ">_ and let's explore it now ^1000";
+        var strings = [line1];
+        if (line2 && line2.trim() !== '') {
+          strings.push(line2);
+        }
+        var options = {
+          strings: strings,
+          typeSpeed: 50,
+          backSpeed: 20,
+          startDelay: 300,
+          loop: true,
+          showCursor: false
+        };
+        new Typed('#typed', options);
+      });
+    </script>
+  </th:block>
+</html>

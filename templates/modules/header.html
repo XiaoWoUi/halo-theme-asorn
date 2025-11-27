@@ -1,0 +1,114 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+  <div
+    class="head"
+    th:with="logoConfig=${theme.config.nav != null ? theme.config.nav.logo : null},
+             navMenuName=${theme.config.nav != null ? theme.config.nav.menu : null},
+             navMenu=${navMenuName != null and !#strings.isEmpty(navMenuName) ? menuFinder.getByName(navMenuName) : null}"
+  >
+    <div class="main">
+      <a href="/" class="logo">
+        <img
+          th:src="${logoConfig != null and logoConfig.text_logo != null and !#strings.isEmpty(logoConfig.text_logo) ? logoConfig.text_logo : #theme.assets('/images/public/logo_text.svg')}"
+          th:alt="${site.title}"
+        />
+      </a>
+      <div class="menu" th:if="${navMenu != null and not #lists.isEmpty(navMenu.menuItems)}">
+        <li
+          class="magical btn"
+          th:each="mi,iterStat : ${navMenu.menuItems}"
+          th:with="linkHref=@{${mi.status.href}}"
+          th:attr="onclick=|window.location.href='${linkHref}'|, data-href=${linkHref}"
+          th:text="${mi.status.displayName}"
+        ></li>
+      </div>
+      <div class="menu" th:unless="${navMenu != null and not #lists.isEmpty(navMenu.menuItems)}">
+        <li
+          class="magical btn"
+          data-href="/"
+          onclick="window.location.href='/'"
+        >请先配置菜单</li>
+      </div>
+      <div class="menu" id="menu-expand">
+        <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+      </div>
+      <div id="menu-panel">
+        <div
+          class="menu-panel-content"
+          th:if="${navMenu != null and not #lists.isEmpty(navMenu.menuItems)}"
+        >
+          <li
+            class="magical btn"
+            th:each="mi,iterStat : ${navMenu.menuItems}"
+            th:with="linkHref=@{${mi.status.href}}"
+            th:attr="onclick=|window.location.href='${linkHref}'|, data-href=${linkHref}"
+            th:text="${mi.status.displayName}"
+          ></li>
+        </div>
+        <div class="menu-panel-content" th:unless="${navMenu != null and not #lists.isEmpty(navMenu.menuItems)}"></div>
+      </div>
+    </div>
+    <blockquote>
+      <img
+        th:src="${logoConfig != null and logoConfig.icon_logo != null and !#strings.isEmpty(logoConfig.icon_logo) ? logoConfig.icon_logo : #theme.assets('/images/public/logo.svg')}"
+        th:alt="${site.title}"
+      />
+    </blockquote>
+  </div>
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.head .menu li.magical.btn');
+      if (!items.length) {
+        return;
+      }
+      function normalizePath(url) {
+        if (!url) {
+          return null;
+        }
+        var a = document.createElement('a');
+        a.href = url;
+        if (a.host && window.location && window.location.host && a.host !== window.location.host) {
+          return null;
+        }
+        var p = a.pathname || '/';
+        p = p.replace(/\/+$/, '');
+        return p || '/';
+      }
+      var currentPath = normalizePath(window.location.pathname || window.location.href);
+      if (!currentPath) {
+        return;
+      }
+      var activePath = null;
+      var activeLength = -1;
+      items.forEach(function (li) {
+        var href = li.getAttribute('data-href');
+        if (!href) {
+          return;
+        }
+        var p = normalizePath(href);
+        if (!p) {
+          return;
+        }
+        if (currentPath === p || (p !== '/' && currentPath.indexOf(p) === 0)) {
+          if (p.length > activeLength) {
+            activePath = p;
+            activeLength = p.length;
+          }
+        }
+      });
+      if (!activePath) {
+        return;
+      }
+      var assigned = false;
+      items.forEach(function (li) {
+        var href = li.getAttribute('data-href');
+        var p = normalizePath(href);
+        if (!assigned && p === activePath) {
+          li.classList.add('nav');
+          assigned = true;
+        } else {
+          li.classList.remove('nav');
+        }
+      });
+    })();
+  </script>
+</th:block>

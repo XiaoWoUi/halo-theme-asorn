@@ -1,0 +1,65 @@
+<th:block
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="project"
+  th:with="projectsConfig=${theme.config.home != null ? theme.config.home.projects : null},
+           blockTitle=${projectsConfig != null and projectsConfig.title != null and !#strings.isEmpty(projectsConfig.title) ? projectsConfig.title : 'What did I do'},
+           list1=${projectsConfig != null ? projectsConfig.list1 : null},
+           list2=${projectsConfig != null ? projectsConfig.list2 : null},
+           hasList1=${list1 != null and !#lists.isEmpty(list1)},
+           hasList2=${list2 != null and !#lists.isEmpty(list2)},
+           hasItems=${hasList1 or hasList2}"
+>
+  <div class="content-divider"></div>
+  <div class="quickly-link">
+    <div class="title-hi" th:text="${blockTitle}"></div>
+    <div class="loader"></div>
+    <div class="link-card">
+      <th:block th:if="${hasItems}">
+        <div class="link-card-list" th:if="${hasList1}">
+          <div class="magical link-card-item" th:each="item : ${list1}">
+            <a th:href="${item.url}" th:target="${item.target != null and !#strings.isEmpty(item.target) ? item.target : '_blank'}">
+              <img
+                th:if="${item.image != null and !#strings.isEmpty(item.image)}"
+                th:src="${#strings.startsWith(item.image, '/images/') ? #theme.assets(item.image) : item.image}"
+                th:alt="${item.title}"
+              />
+              <div class="info">
+                <div class="info-title" th:text="${item.title}"></div>
+                <div class="info-desc" th:text="${item.description}"></div>
+              </div>
+              <div class="icon icon-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z" fill="#B3B3C1"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" th:if="${hasList2}">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 8V0H4.5V8H3.5Z" fill="#62616F"></path>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4.5H0V3.5H8V4.5Z" fill="#62616F"></path>
+        </svg>
+        <div class="link-card-list" th:if="${hasList2}">
+          <div class="magical link-card-item" th:each="item : ${list2}">
+            <a th:href="${item.url}" th:target="${item.target != null and !#strings.isEmpty(item.target) ? item.target : '_blank'}">
+              <img
+                th:if="${item.image != null and !#strings.isEmpty(item.image)}"
+                th:src="${#strings.startsWith(item.image, '/images/') ? #theme.assets(item.image) : item.image}"
+                th:alt="${item.title}"
+              />
+              <div class="info">
+                <div class="info-title" th:text="${item.title}"></div>
+                <div class="info-desc" th:text="${item.description}"></div>
+              </div>
+              <div class="icon icon-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z" fill="#B3B3C1"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+</th:block>

@@ -1,0 +1,33 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-asorn
+spec:
+  displayName: Asorn
+  author:
+    name: HaoUp｜Asorn
+    website: https://asorn.cn/
+  description: "Asorn 的完全开源个人作品集主题，（Halo 移植版）"
+  logo: /themes/theme-asorn/assets/images/public/favicon.svg
+  homepage: https://asorn.528688.cn
+  settingName: "theme-asorn-setting"
+  configMapName: "theme-asorn-configMap"
+  version: "1.0.0"
+  requires: ">=2.20.0"
+  license:
+    - name: "GPL-3.0"
+      url: "https://www.gnu.org/licenses/gpl-3.0.html"
+  customTemplates:
+    page:
+      - name: "工作页面模版"
+        description: "Work页面模板。"
+        screenshot:
+        file: work.html
+      - name: "关于页面模版"
+        description: "About 页面模板。"
+        screenshot:
+        file: about.html
+      - name: "博客页面模版"
+        description: "Blog 页面模板。"
+        screenshot:
+        file: blog.html

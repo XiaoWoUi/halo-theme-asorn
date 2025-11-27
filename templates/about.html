@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(
+        title = ${(theme.config.about != null
+                  and theme.config.about.seo != null
+                  and theme.config.about.seo.title != null
+                  and !#strings.isEmpty(theme.config.about.seo.title)
+                  ? (theme.config.about.seo.subtitle != null
+                     and !#strings.isEmpty(theme.config.about.seo.subtitle)
+                     ? theme.config.about.seo.title + ' - ' + theme.config.about.seo.subtitle
+                     : theme.config.about.seo.title)
+                  : 'Asorn')},
+        content = ~{::content},
+        head = ~{::head}
+      )}">
+  <th:block
+    th:fragment="head"
+    th:with="aboutConfig=${theme.config.about},
+             seoConfig=${aboutConfig != null ? aboutConfig.seo : null},
+             aboutDescription=${seoConfig != null and seoConfig.description != null and !#strings.isEmpty(seoConfig.description) ? seoConfig.description : 'Welcome to my open source blog'}"
+  >
+    <meta
+      name="description"
+      th:attr="content=${aboutDescription}"
+    />
+  </th:block>
+  <th:block th:fragment="content"
+            th:with="aboutConfig=${theme.config.about},
+                     introduce=${aboutConfig != null ? aboutConfig.introduce : null},
+                     contact=${aboutConfig != null ? aboutConfig.contact : null},
+                     resume=${aboutConfig != null ? aboutConfig.resume : null},
+                     power=${aboutConfig != null ? aboutConfig.power : null},
+                     experience=${aboutConfig != null ? aboutConfig.experience : null},
+                     name=${introduce != null and introduce.name != null and !#strings.isEmpty(introduce.name) ? introduce.name : 'Name'},
+                     introduceTitle=${introduce != null and introduce.title != null and !#strings.isEmpty(introduce.title) ? introduce.title : 'Introduce'},
+                     introduceContent=${introduce != null and introduce.content != null and !#strings.isEmpty(introduce.content) ? introduce.content : 'I am currently a product designer, junior developer, and aspire to become a design engineer.'},
+                     contactTitle=${contact != null and contact.title != null and !#strings.isEmpty(contact.title) ? contact.title : 'Contact'},
+                     contactItems=${contact != null and contact.items != null ? contact.items : null},
+                     powerStats=${power != null and power.stats != null ? power.stats : null},
+                     powerCards=${power != null and power.cards != null ? power.cards : null},
+                     experienceItems=${experience != null and experience.items != null ? experience.items : null},
+                     resumeTitle=${resume != null and resume.title != null and !#strings.isEmpty(resume.title) ? resume.title : 'Resume'},
+                     resumeHelptext=${resume != null and resume.helptext != null and !#strings.isEmpty(resume.helptext) ? resume.helptext : 'Download my resume (PDF & 1MB)'},
+                     resumeButtonText=${resume != null and resume.button_text != null and !#strings.isEmpty(resume.button_text) ? resume.button_text : 'Download'},
+                     resumeButtonLink=${resume != null and resume.button_link != null and !#strings.isEmpty(resume.button_link) ? resume.button_link : 'https://asorn.cn/'},
+                     resumeButtonTarget=${resume != null and resume.button_target != null and !#strings.isEmpty(resume.button_target) ? resume.button_target : '_blank'}">
+    <div class="about">
+      <div class="about-top">
+        <div class="about-name" th:text="${name}"></div>
+        <div class="about-info">
+          <div class="about-info-left">
+            <div class="about-info-title" th:text="${introduceTitle}"></div>
+            <div class="introduce-desc" th:utext="${#strings.replace(introduceContent, '\n', '<br><br>')}"></div>
+          </div>
+          <div class="about-info-right">
+            <div class="contact">
+              <div class="about-info-title" th:text="${contactTitle}"></div>
+              <div class="contact-desc">
+                <th:block th:if="${contactItems != null and !#lists.isEmpty(contactItems)}">
+                  <div class="list" th:each="item : ${contactItems}"
+                       th:with="hasLink=${item.link != null and !#strings.isEmpty(item.link)},
+                                hasImage=${item.image != null and !#strings.isEmpty(item.image)}">
+                    <div class="list-label" th:text="${item.label}"></div>
+                    <div class="list-value">
+                      <a th:if="${hasLink and hasImage}" class="tooltip" th:href="${item.link}" target="_blank">
+                        <span th:text="${item.value}"></span>
+                        <div class="tooltip-box">
+                          <img th:src="${item.image}" alt="contact image" />
+                        </div>
+                      </a>
+                      <a th:if="${hasLink and !hasImage}" th:href="${item.link}" target="_blank" th:text="${item.value}"></a>
+                      <a th:if="${!hasLink and hasImage}" class="tooltip">
+                        <span th:text="${item.value}"></span>
+                        <div class="tooltip-box">
+                          <img th:src="${item.image}" alt="contact image" />
+                        </div>
+                      </a>
+                      <span th:if="${!hasLink and !hasImage}" th:text="${item.value}"></span>
+                    </div>
+                  </div>
+                </th:block>
+              </div>
+            </div>
+            <div class="resume">
+              <div class="about-info-title resume-title" th:text="${resumeTitle}"></div>
+              <div class="resume-desc">
+                <div class="resume-desc-helptext" th:text="${resumeHelptext}"></div>
+                <div class="magical resume-btn">
+                  <a th:href="${resumeButtonLink}"
+                     th:target="${resumeButtonTarget}"
+                     th:text="${resumeButtonText}"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-middle">
+        <div class="power">
+          <div class="list-00" th:if="${powerStats != null and !#lists.isEmpty(powerStats)}">
+            <div class="magical power-card-number" th:each="stat : ${powerStats}">
+              <a>
+                <div class="card-title" th:text="${stat.value}"></div>
+                <div class="card-text" th:text="${stat.text}"></div>
+              </a>
+            </div>
+          </div>
+          <div class="list-01" th:if="${powerCards != null and !#lists.isEmpty(powerCards)}">
+            <div class="magical power-card" th:each="card : ${powerCards}">
+              <a>
+                <div class="card-img"
+                     th:if="${card.image != null and !#strings.isEmpty(card.image)}"
+                     th:style="${'background-image: url(''' + card.image + ''')'}"></div>
+                <div class="card-text" th:text="${card.text}"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-bottom" th:if="${experienceItems != null and !#lists.isEmpty(experienceItems)}">
+        <div class="experience">
+          <div class="item" th:each="exp : ${experienceItems}">
+            <div class="time" th:text="${exp.time}"></div>
+            <div class="name">
+              <div class="company">
+                <a th:if="${exp.company_link != null and !#strings.isEmpty(exp.company_link)}"
+                   th:href="${exp.company_link}"
+                   target="_blank"
+                   th:text="${exp.company + ' ↗'}"></a>
+                <span th:if="${exp.company_link == null or #strings.isEmpty(exp.company_link)}"
+                      th:text="${exp.company}"></span>
+              </div>
+              <div class="job" th:text="${exp.job}"></div>
+            </div>
+            <div class="project-experience" th:if="${exp.projects != null and !#lists.isEmpty(exp.projects)}">
+              <div class="item" th:each="proj : ${exp.projects}">
+                <div class="title" th:text="${proj.title}"></div>
+                <div class="desc">
+                  <ul>
+                    <li th:each="line : ${#strings.arraySplit(proj.desc, ';')}"
+                        th:if="${!#strings.isEmpty(#strings.trim(line))}"
+                        th:text="${#strings.trim(line)}"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

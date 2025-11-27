@@ -1,0 +1,681 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-asorn-setting
+spec:
+  forms:
+    - group: nav
+      label: "导航栏"
+      formSchema:
+        - $formkit: group
+          name: logo
+          label: "Logo 设置"
+          help: "⚠️提示：如遇 Logo 过大导致样式异常，请自行在图像编辑工具中缩放到合适尺寸再上传。原版参考尺寸：文字 Logo 约 52×20px，圆形 Logo 约 24×24px。"
+          value:
+            text_logo: ""
+            icon_logo: ""
+          children:
+            - $formkit: attachment
+              name: text_logo
+              label: "文字 Logo（横向）"
+              help: "用于导航栏中的文字 Logo，不配置时使用主题内置 logo_text.svg。"
+            - $formkit: attachment
+              name: icon_logo
+              label: "圆形 Logo（图标）"
+              help: "用于首页圆形 Logo，不配置时使用主题内置 logo.svg。"
+        - $formkit: menuRadio
+          name: menu
+          label: "导航菜单"
+          help: "选择用于导航栏的菜单组，未选择时默认使用固定的 Home / Work / Blog / About 菜单。"
+          value: ""
+    - group: home
+      label: "首页"
+      formSchema:
+        - $formkit: group
+          name: hero
+          label: "Hero区域"
+          help: "配置首页顶部大标题与打字机文案。"
+          value:
+            title_prefix: "Hi, I'm"
+            title_name: "Asorn"
+            typed_line1: ">_ welcome to my secret garden ^1000"
+            typed_line2: ">_ and let's explore it now ^1000"
+            title_link: "https://asorn.cn"
+            title_target: "_self"
+          children:
+            - $formkit: text
+              name: title_prefix
+              label: "大标题前缀"
+              help: "例如：Hi, I'm"
+            - $formkit: text
+              name: title_name
+              label: "大标题名称"
+              help: "例如：Asorn"
+            - $formkit: text
+              name: typed_line1
+              label: "打字机文案 1"
+              help: "第一行打字机文本"
+            - $formkit: text
+              name: typed_line2
+              label: "打字机文案 2"
+              help: "第二行打字机文本，可留空"
+            - $formkit: url
+              name: title_link
+              label: "大标题链接"
+              help: "点击名称时跳转的地址，例如：https://asorn.cn"
+            - $formkit: select
+              name: title_target
+              label: "链接打开方式"
+              value: "_self"
+              options:
+                - label: "本窗口打开"
+                  value: "_self"
+                - label: "新窗口打开"
+                  value: "_blank"
+        - $formkit: group
+          name: projects
+          label: "我的项目"
+          help: "配置首页项目区块标题与项目列表。"
+          value:
+            title: "What did I do"
+          children:
+            - $formkit: text
+              name: title
+              label: "区块标题"
+            - $formkit: repeater
+              name: list1
+              label: "项目列表一"
+              help: "模块一"
+              value:
+                - image: "/themes/theme-asorn/assets/images/index/larkmap.png"
+                  title: "Larkmap"
+                  description: "Designer website navigation"
+                  url: "https://larkmap.com"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/qingicon.png"
+                  title: "QingIcon"
+                  description: "2200+ fill, dual color icon"
+                  url: "https://qingicon.com"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/figicon.png"
+                  title: "Figicon"
+                  description: "Figma icon library plugin"
+                  url: "https://www.figma.com/community/plugin/1111565622161029659"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/rpb.png"
+                  title: "RPB"
+                  description: "Replace the Figma page background"
+                  url: "https://www.figma.com/community/plugin/1286263811056993042"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/adapter.png"
+                  title: "Q-Adapter"
+                  description: "B-end product layout adaptation"
+                  url: "https://adapter.biliui.com"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/biliui.png"
+                  title: "Biliui"
+                  description: "First generation blog"
+                  url: "https://biliui.com"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/dippermap.png"
+                  title: "Dippermap"
+                  description: "Open source GIS navigation tools"
+                  url: "https://nav.dippermap.com/"
+                  target: "_blank"
+              children:
+                - $formkit: attachment
+                  name: image
+                  label: "项目图片"
+                - $formkit: text
+                  name: title
+                  label: "项目标题"
+                - $formkit: text
+                  name: description
+                  label: "项目介绍"
+                - $formkit: url
+                  name: url
+                  label: "项目链接"
+                - $formkit: select
+                  name: target
+                  label: "链接打开方式"
+                  value: "_blank"
+                  options:
+                    - label: "新窗口打开"
+                      value: "_blank"
+                    - label: "本窗口打开"
+                      value: "_self"
+            - $formkit: repeater
+              name: list2
+              label: "项目列表二"
+              help: "模块二"
+              value:
+                - image: "/themes/theme-asorn/assets/images/index/yuque.png"
+                  title: "Yu Que"
+                  description: "My knowledge garden"
+                  url: "https://www.yuque.com/asorn"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/github.png"
+                  title: "Github"
+                  description: "My code garden"
+                  url: "https://github.com/asorn"
+                  target: "_blank"
+                - image: "/themes/theme-asorn/assets/images/index/figma.png"
+                  title: "Figma"
+                  description: "My design garden"
+                  url: "https://www.figma.com/@asorn"
+                  target: "_blank"
+              children:
+                - $formkit: attachment
+                  name: image
+                  label: "项目图片"
+                - $formkit: text
+                  name: title
+                  label: "项目标题"
+                - $formkit: text
+                  name: description
+                  label: "项目介绍"
+                - $formkit: url
+                  name: url
+                  label: "项目链接"
+                - $formkit: select
+                  name: target
+                  label: "链接打开方式"
+                  value: "_blank"
+                  options:
+                    - label: "新窗口打开"
+                      value: "_blank"
+                    - label: "本窗口打开"
+                      value: "_self"
+    - group: work
+      label: "工作"
+      formSchema:
+        - $formkit: group
+          name: seo
+          label: "SEO"
+          value:
+            title: "My Work"
+            subtitle: ""
+            description: "Welcome to my open source blog"
+          children:
+            - $formkit: text
+              name: title
+              label: "页面标题"
+            - $formkit: text
+              name: subtitle
+              label: "页面副标题"
+            - $formkit: text
+              name: description
+              label: "页面描述"
+        - $formkit: repeater
+          name: items
+          label: "作品列表"
+          help: "配置 Work 页面中的作品卡片列表。"
+          value:
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Web"
+              tag_color: "#57AC84"
+              tag_bg_color: "rgba(87, 172, 132, 0.1)"
+              tag_border_color: "rgba(87, 172, 132, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Assets"
+              tag_color: "#D59A78"
+              tag_bg_color: "rgba(213, 154, 120, 0.1)"
+              tag_border_color: "rgba(213, 154, 120, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "App"
+              tag_color: "#CB55D2"
+              tag_bg_color: "rgba(203, 85, 210, 0.1)"
+              tag_border_color: "rgba(203, 85, 210, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "ToB"
+              tag_color: "#6F98FF"
+              tag_bg_color: "rgba(111, 152, 255, 0.1)"
+              tag_border_color: "rgba(111, 152, 255, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Other"
+              tag_color: "#939EA9"
+              tag_bg_color: "rgba(147, 158, 169, 0.1)"
+              tag_border_color: "rgba(147, 158, 169, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Other"
+              tag_color: "#939EA9"
+              tag_bg_color: "rgba(147, 158, 169, 0.1)"
+              tag_border_color: "rgba(147, 158, 169, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Other"
+              tag_color: "#939EA9"
+              tag_bg_color: "rgba(147, 158, 169, 0.1)"
+              tag_border_color: "rgba(147, 158, 169, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - image: "/themes/theme-asorn/assets/images/work/empty.png"
+              title: "Title"
+              description: "Welcome to my open source blog"
+              tag_text: "Other"
+              tag_color: "#939EA9"
+              tag_bg_color: "rgba(147, 158, 169, 0.1)"
+              tag_border_color: "rgba(147, 158, 169, 0.16)"
+              url: "https://asorn.cn/"
+              target: "_blank"
+          children:
+            - $formkit: attachment
+              name: image
+              label: "作品图片"
+            - $formkit: text
+              name: title
+              label: "作品标题"
+            - $formkit: text
+              name: description
+              label: "作品简介"
+            - $formkit: text
+              name: tag_text
+              label: "小标签文字"
+            - $formkit: color
+              name: tag_color
+              label: "小标签文字颜色"
+            - $formkit: color
+              name: tag_bg_color
+              label: "小标签背景颜色"
+            - $formkit: color
+              name: tag_border_color
+              label: "小标签描边颜色"
+            - $formkit: url
+              name: url
+              label: "链接地址"
+            - $formkit: select
+              name: target
+              label: "链接打开方式"
+              value: "_blank"
+              options:
+                - label: "新窗口打开"
+                  value: "_blank"
+                - label: "本窗口打开"
+                  value: "_self"
+    - group: blog
+      label: "博客"
+      formSchema:
+        - $formkit: group
+          name: seo
+          label: "SEO"
+          value:
+            title: "Asorn"
+            subtitle: "My Blog"
+            description: "Welcome to my open source blog"
+          children:
+            - $formkit: text
+              name: title
+              label: "页面标题"
+            - $formkit: text
+              name: subtitle
+              label: "页面副标题"
+            - $formkit: text
+              name: description
+              label: "页面描述"
+        - $formkit: repeater
+          name: items
+          label: "博客文章列表"
+          help: "可添加多篇文章，支持置顶。"
+          value:
+            - title: "我的知识花园"
+              desc: "你可以了解我在沉淀设计资产方面的相关经验、多年设计工作以来日积月累的丰富实战经验、作为重度观影爱好者的无聊记录、对这个世界充满敬畏而收集的奇思妙想。"
+              is_pinned: true
+              avatar: "/themes/theme-asorn/assets/images/blog/avatar.svg"
+              author: "Asorn"
+              time: "1970-01-01"
+              url: "https://www.yuque.com/asorn"
+              target: "_blank"
+            - title: "My name is Asorn"
+              desc: "Welcome to my open source blog, my blog address is: https://asorn.cn/"
+              is_pinned: false
+              avatar: "/themes/theme-asorn/assets/images/blog/avatar.svg"
+              author: "Asorn"
+              time: "2022-12-25"
+              url: "https://asorn.cn/"
+              target: "_blank"
+          children:
+            - $formkit: text
+              name: title
+              label: "文章标题"
+            - $formkit: textarea
+              name: desc
+              label: "文章简介"
+              rows: 3
+            - $formkit: radio
+              name: is_pinned
+              label: "是否置顶"
+              value: false
+              options:
+                - label: "置顶"
+                  value: true
+                - label: "不置顶"
+                  value: false
+            - $formkit: attachment
+              name: avatar
+              label: "作者头像"
+            - $formkit: text
+              name: author
+              label: "作者名称"
+            - $formkit: text
+              name: time
+              label: "发布时间"
+              help: "格式：YYYY-MM-DD"
+            - $formkit: url
+              name: url
+              label: "文章链接"
+            - $formkit: select
+              name: target
+              label: "链接打开方式"
+              value: "_blank"
+              options:
+                - label: "新窗口打开"
+                  value: "_blank"
+                - label: "本窗口打开"
+                  value: "_self"
+    - group: about
+      label: "关于"
+      formSchema:
+        - $formkit: group
+          name: seo
+          label: "SEO"
+          value:
+            title: "Asorn"
+            subtitle: "About Me"
+            description: "Welcome to my open source blog"
+          children:
+            - $formkit: text
+              name: title
+              label: "页面标题"
+            - $formkit: text
+              name: subtitle
+              label: "页面副标题"
+            - $formkit: text
+              name: description
+              label: "页面描述"
+        - $formkit: group
+          name: introduce
+          label: "自我介绍"
+          value:
+            name: "Name"
+            title: "Introduce"
+            content: "I am currently a product designer, junior developer, and aspire to become a design engineer. Having insights and practical experience in multiple industries such as cloud computing, low code, e-commerce, intelligent customer service, and zero trust.\n\nI am passionate about the infinite possibilities of technology and also focused on exploring the values of product design, seeking a balance between ultimate design, interaction, technological inclusion, and business understanding to solve problems.\n\nIn addition, I have won three patents for appearance invention, which can be found in the China National Intellectual Property Administration ↗ Enter my name on the official website to search."
+          children:
+            - $formkit: text
+              name: name
+              label: "姓名"
+            - $formkit: text
+              name: title
+              label: "介绍标题"
+            - $formkit: textarea
+              name: content
+              label: "自我介绍内容"
+              rows: 8
+        - $formkit: group
+          name: contact
+          label: "联系方式"
+          value:
+            title: "Contact"
+            items:
+              - label: "Email："
+                value: "hi@asorn.cn"
+                link: ""
+                image: ""
+              - label: "Wechat："
+                value: "imasorn"
+                link: ""
+                image: "/themes/theme-asorn/assets/images/about/wechat.png"
+          children:
+            - $formkit: text
+              name: title
+              label: "联系标题"
+            - $formkit: repeater
+              name: items
+              label: "联系项列表"
+              help: "可添加多个联系方式，支持邮箱、微信、电话等。"
+              children:
+                - $formkit: text
+                  name: label
+                  label: "标签"
+                  help: "例如：Email：、Wechat：、Phone："
+                - $formkit: text
+                  name: value
+                  label: "值"
+                  help: "联系方式的具体内容"
+                - $formkit: url
+                  name: link
+                  label: "链接地址"
+                  help: "请填写完整的 URL"
+                - $formkit: attachment
+                  name: image
+                  label: "图片/二维码"
+                  help: "上传图片或二维码"
+        - $formkit: group
+          name: resume
+          label: "简历"
+          value:
+            title: "Resume"
+            helptext: "Download my resume (PDF & 1MB)"
+            button_text: "Download"
+            button_link: "https://asorn.cn/"
+            button_target: "_blank"
+          children:
+            - $formkit: text
+              name: title
+              label: "简历标题"
+            - $formkit: text
+              name: helptext
+              label: "说明文字"
+            - $formkit: text
+              name: button_text
+              label: "按钮文字"
+            - $formkit: url
+              name: button_link
+              label: "按钮链接"
+            - $formkit: select
+              name: button_target
+              label: "打开方式"
+              value: "_blank"
+              options:
+                - label: "新窗口打开"
+                  value: "_blank"
+                - label: "本窗口打开"
+                  value: "_self"
+        - $formkit: group
+          name: power
+          label: "能力与数据"
+          value:
+            stats:
+              - value: "7"
+                text: "Work"
+              - value: "60⁺"
+                text: "Project"
+              - value: "130⁺"
+                text: "Article"
+              - value: "3"
+                text: "Patent"
+            cards:
+              - image: "/themes/theme-asorn/assets/images/about/abstract.svg"
+                text: "My abilities"
+              - image: "/themes/theme-asorn/assets/images/about/menu.svg"
+                text: "My abilities"
+              - image: "/themes/theme-asorn/assets/images/about/code.svg"
+                text: "My abilities"
+              - image: "/themes/theme-asorn/assets/images/about/pin.svg"
+                text: "My abilities"
+              - image: "/themes/theme-asorn/assets/images/about/pen.svg"
+                text: "My abilities"
+          children:
+            - $formkit: repeater
+              name: stats
+              label: "统计数据"
+              help: "例如：7 Work、60⁺ Project。"
+              children:
+                - $formkit: text
+                  name: value
+                  label: "数字"
+                - $formkit: text
+                  name: text
+                  label: "说明文字"
+            - $formkit: repeater
+              name: cards
+              label: "能力卡片"
+              help: "控制下方图标卡片及文字。"
+              children:
+                - $formkit: attachment
+                  name: image
+                  label: "图标图片"
+                - $formkit: text
+                  name: text
+                  label: "说明文字"
+        - $formkit: group
+          name: experience
+          label: "工作经历"
+          value:
+            items:
+              - time: "❖ 2023.10 ~ Now"
+                company: "Company One"
+                company_link: "https://asorn.cn/"
+                job: "UI Designer"
+                projects:
+                  - title: "Project Title"
+                    desc: "This is the first description;This is the second description"
+              - time: "❖ 2019.08 ~ 2023.08"
+                company: "Company Two"
+                company_link: "https://asorn.cn/"
+                job: "Product Designer"
+                projects:
+                  - title: "Project Title One"
+                    desc: "This is the first description;This is the second description"
+                  - title: "Project Title Two"
+                    desc: "This is the first description;This is the second description"
+                  - title: "Project Title Three"
+                    desc: "This is the first description;This is the second description"
+              - time: "❖ 2016.05 ~ 2019.06"
+                company: "Company Three"
+                company_link: "https://asorn.cn/"
+                job: "UI Designer"
+                projects:
+                  - title: "Project Title"
+                    desc: "This is the first description;This is the second description"
+          children:
+            - $formkit: repeater
+              name: items
+              label: "经历列表"
+              help: "每一条为一段工作经历。"
+              children:
+                - $formkit: text
+                  name: time
+                  label: "时间"
+                  help: "例如：❖ 2023.10 ~ Now"
+                - $formkit: text
+                  name: company
+                  label: "公司名称"
+                - $formkit: url
+                  name: company_link
+                  label: "公司链接"
+                  help: "可选，留空则不加链接"
+                - $formkit: text
+                  name: job
+                  label: "职位"
+                - $formkit: repeater
+                  name: projects
+                  label: "项目经历"
+                  help: "一段经历下的多个项目。"
+                  children:
+                    - $formkit: text
+                      name: title
+                      label: "项目标题"
+                    - $formkit: textarea
+                      name: desc
+                      label: "项目描述"
+                      help: "用分号 ; 分隔多条描述，每条会显示为一个列表项。"
+    - group: footer
+      label: "页脚"
+      formSchema:
+        - $formkit: text
+          name: start_year
+          label: "开始年份"
+          value: ""
+          help: "例如：2020，用于在页脚显示 2020-当前年份 的年份范围。"
+        - $formkit: repeater
+          name: links
+          label: "页脚链接"
+          help: "可配置多个页脚链接。"
+          value:
+            - text: "Asorn"
+              url: "https://asorn.cn/"
+              target: "_blank"
+            - text: "ZDO"
+              url: "https://zdo.fun/"
+              target: "_blank"
+            - text: "Halo"
+              url: "https://halo.run/"
+              target: "_blank"
+          children:
+            - $formkit: text
+              name: text
+              label: "链接文字"
+            - $formkit: url
+              name: url
+              label: "链接地址"
+            - $formkit: select
+              name: target
+              label: "打开方式"
+              value: "_blank"
+              options:
+                - label: "新窗口打开"
+                  value: "_blank"
+                - label: "本窗口打开"
+                  value: "_self"
+    - group: custom
+      label: "扩展设置"
+      formSchema:
+        - $formkit: checkbox
+          name: enable_click_effect
+          label: "启用点击特效"
+          value: true
+        - $formkit: code
+          name: ds_header
+          label: "头部HTML代码"
+          height: 200px
+          language: html
+        - $formkit: code
+          name: ds_footer
+          label: "底部HTML代码"
+          height: 200px
+          language: html
+        - $formkit: code
+          name: code_css
+          label: "自定义CSS"
+          height: 200px
+          language: css
+        - $formkit: code
+          name: code_js
+          label: "自定义Javascript"
+          height: 200px
+          language: javascript

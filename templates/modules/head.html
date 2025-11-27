@@ -1,0 +1,19 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="head(title)">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:text="${title} ?: ${site.title}"></title>
+  <link rel="stylesheet" th:href="${#theme.assets('/css/style.css')}" />
+  <link
+    rel="shortcut icon"
+    th:href="${site.favicon}"
+  />
+  <style
+    type="text/css"
+    th:if="${theme.config.custom != null and !#strings.isEmpty(theme.config.custom.code_css)}"
+    th:utext="${theme.config.custom.code_css}"
+  ></style>
+  <th:block
+    th:if="${theme.config.custom != null and !#strings.isEmpty(theme.config.custom.ds_header)}"
+    th:utext="${theme.config.custom.ds_header}"
+  ></th:block>
+</th:block>

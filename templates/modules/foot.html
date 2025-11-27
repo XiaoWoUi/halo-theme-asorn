@@ -1,0 +1,12 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="foot">
+  <script th:src="${#theme.assets('/js/main.js')}"></script>
+  <script
+    th:if="${theme.config.custom != null and theme.config.custom.enable_click_effect}"
+    th:src="${#theme.assets('/js/anime.js')}"
+  ></script>
+  <script
+    th:if="${theme.config.custom != null and theme.config.custom.enable_click_effect}"
+    th:src="${#theme.assets('/js/firework.js')}"
+  ></script>
+  <script th:src="${#theme.assets('/js/typed.umd.js')}"></script>
+</th:block>

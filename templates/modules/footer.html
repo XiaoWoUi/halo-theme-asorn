@@ -1,0 +1,36 @@
+<th:block
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="footer"
+  th:with="footerConfig=${theme.config.footer},
+           startYear=${footerConfig != null ? footerConfig.start_year : null},
+           currentYear=${#dates.format(#dates.createNow(), 'yyyy')},
+           yearText=${startYear != null and !#strings.isEmpty(startYear) and startYear != currentYear ? startYear + '-' + currentYear : currentYear},
+           links=${footerConfig != null ? footerConfig.links : null},
+           hasLinks=${links != null and !#lists.isEmpty(links)}"
+>
+  <div class="footer">
+    <div class="copyright">
+      <div>
+        <span th:text="${'© ' + yearText + ' '}">© 2023 </span>
+        <span th:text="${site.title + ' '}">Asorn </span>
+        Design by
+        <a href="https://asorn.cn/" target="_blank">Asorn</a>
+      </div>
+      <th:block th:if="${hasLinks}">
+        <th:block th:each="link, stat : ${links}">
+          <span>|</span>
+          <div
+            th:class="${stat.index == 0 ? 'fillings' : (stat.index == 1 ? 'friends' : 'custom-link')}"
+          >
+            <a
+              th:href="${link.url}"
+              th:target="${link.target != null and !#strings.isEmpty(link.target) ? link.target : '_blank'}"
+              th:text="${link.text}"
+              ></a
+            >
+          </div>
+        </th:block>
+      </th:block>
+    </div>
+  </div>
+</th:block>

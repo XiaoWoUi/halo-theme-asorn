@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(
+        title = ${(theme.config.work != null
+                  and theme.config.work.seo != null
+                  and theme.config.work.seo.title != null
+                  and !#strings.isEmpty(theme.config.work.seo.title)
+                  ? (theme.config.work.seo.subtitle != null
+                     and !#strings.isEmpty(theme.config.work.seo.subtitle)
+                     ? theme.config.work.seo.title + ' - ' + theme.config.work.seo.subtitle
+                     : theme.config.work.seo.title)
+                  : 'My Work')},
+        content = ~{::content},
+        head = ~{::head}
+      )}">
+  <th:block
+    th:fragment="head"
+    th:with="workConfig=${theme.config.work},
+             seoConfig=${workConfig != null ? workConfig.seo : null},
+             workDescription=${seoConfig != null and seoConfig.description != null and !#strings.isEmpty(seoConfig.description) ? seoConfig.description : 'Welcome to my open source blog'}"
+  >
+    <meta
+      name="description"
+      th:attr="content=${workDescription}"
+    />
+  </th:block>
+  <th:block
+    th:fragment="content"
+    th:with="workConfig=${theme.config.work},
+             seoConfig=${workConfig != null ? workConfig.seo : null},
+             workTitle=${seoConfig != null and seoConfig.title != null and !#strings.isEmpty(seoConfig.title) ? seoConfig.title : 'My Work'},
+             workSubtitle=${seoConfig != null and seoConfig.subtitle != null and !#strings.isEmpty(seoConfig.subtitle) ? seoConfig.subtitle : ''},
+             workDescription=${seoConfig != null and seoConfig.description != null and !#strings.isEmpty(seoConfig.description) ? seoConfig.description : 'Welcome to my open source blog'},
+             items=${workConfig != null ? workConfig.items : null},
+             hasItems=${items != null and !#lists.isEmpty(items)}"
+  >
+    <div class="work">
+      <div class="card-list" th:if="${hasItems}">
+        <div
+          class="magical item"
+          th:each="item : ${items}"
+          th:with="tagText=${item.tag_text != null ? item.tag_text : ''},
+                   defaultColor=${tagText == 'Web' ? '#57AC84' : (tagText == 'Assets' ? '#D59A78' : (tagText == 'App' ? '#CB55D2' : (tagText == 'ToB' ? '#6F98FF' : '#939EA9')))},
+                   defaultBg=${tagText == 'Web' ? 'rgba(87, 172, 132, 0.1)' : (tagText == 'Assets' ? 'rgba(213, 154, 120, 0.1)' : (tagText == 'App' ? 'rgba(203, 85, 210, 0.1)' : (tagText == 'ToB' ? 'rgba(111, 152, 255, 0.1)' : 'rgba(147, 158, 169, 0.1)')))},
+                   defaultBorder=${tagText == 'Web' ? 'rgba(87, 172, 132, 0.16)' : (tagText == 'Assets' ? 'rgba(213, 154, 120, 0.16)' : (tagText == 'App' ? 'rgba(203, 85, 210, 0.16)' : (tagText == 'ToB' ? 'rgba(111, 152, 255, 0.16)' : 'rgba(147, 158, 169, 0.16)')))},
+                   tagColor=${item.tag_color != null and !#strings.isEmpty(item.tag_color) ? item.tag_color : defaultColor},
+                   tagBg=${item.tag_bg_color != null and !#strings.isEmpty(item.tag_bg_color) ? item.tag_bg_color : defaultBg},
+                   tagBorder=${item.tag_border_color != null and !#strings.isEmpty(item.tag_border_color) ? item.tag_border_color : defaultBorder}"
+        >
+          <a th:href="${item.url}" th:target="${item.target != null and !#strings.isEmpty(item.target) ? item.target : '_blank'}">
+            <div class="dark">
+              <img
+                class="cover"
+                th:if="${item.image != null and !#strings.isEmpty(item.image)}"
+                th:src="${item.image}"
+                th:alt="${item.title}"
+              />
+            </div>
+            <div class="text">
+              <div class="title-area">
+                <div class="title">
+                  <div class="name" th:text="${item.title}"></div>
+                  <div class="name link"> ↗</div>
+                </div>
+                <div
+                  class="tag"
+                  th:text="${tagText}"
+                  th:style="${'color:' + tagColor
+                             + ';background:' + tagBg
+                             + ';border:1px solid ' + tagBorder}"
+                ></div>
+              </div>
+              <div class="desc" th:text="${item.description}"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>
