@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(
+        title = ${post != null && post.spec != null && post.spec.title != null ? post.spec.title + ' - ' + site.title : site.title},
+        content = ~{::content},
+        head = ~{::head}
+      )}">
+  <th:block th:fragment="head">
+    <meta name="description"
+          th:if="${post != null && post.status != null && post.status.excerpt != null && !#strings.isEmpty(post.status.excerpt)}"
+          th:attr="content=${post.status.excerpt}" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" th:attr="content=${post.spec.title}" />
+    <meta property="og:description"
+          th:if="${post != null && post.status != null && post.status.excerpt != null && !#strings.isEmpty(post.status.excerpt)}"
+          th:attr="content=${post.status.excerpt}" />
+    <meta property="og:image"
+          th:if="${post != null && post.spec != null && post.spec.cover != null && !#strings.isEmpty(post.spec.cover)}"
+          th:attr="content=${post.spec.cover}" />
+  </th:block>
+  <th:block th:fragment="content">
+    <div class="blog blog-post">
+      <div class="main">
+        <div class="blog-left">
+          <div class="blog-left-line">
+            <img th:src="${#theme.assets('/images/blog/line-dot.svg')}" alt="" />
+          </div>
+        </div>
+        <div class="blog-list">
+          <article class="item post-detail" th:if="${post != null}">
+            <header class="post-header"
+                    th:with="publishTime=${post.spec.publishTime != null ? post.spec.publishTime : post.metadata.creationTimestamp},
+                             firstTag=${post.tags != null and !#lists.isEmpty(post.tags) ? post.tags[0] : null}">
+              <h1 class="post-title" th:text="${post.spec.title}"></h1>
+              <div class="post-info">
+                <span class="post-info-item post-info-date"
+                      th:text="${#temporals.format(publishTime, 'yyyy-MM-dd')}">
+                </span>
+                <span class="post-info-separator"></span>
+                <span class="post-info-item post-info-author"
+                      th:text="${post.owner != null && post.owner.displayName != null && !#strings.isEmpty(post.owner.displayName) ? post.owner.displayName : site.title}"></span>
+                <span class="post-info-separator" th:if="${firstTag != null}"></span>
+                <span class="post-info-item post-info-tag"
+                      th:if="${firstTag != null}"
+                      th:text="${'#' + firstTag.spec.displayName}"></span>
+              </div>
+              <div class="post-cover"
+                   th:if="${post.spec != null && post.spec.cover != null && !#strings.isEmpty(post.spec.cover)}">
+                <img th:src="${post.spec.cover}" th:alt="${post.spec.title}" />
+              </div>
+            </header>
+            <section class="post-content">
+              <div class="content-body" th:utext="${post.content != null ? post.content.content : ''}">
+              </div>
+            </section>
+          </article>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>
